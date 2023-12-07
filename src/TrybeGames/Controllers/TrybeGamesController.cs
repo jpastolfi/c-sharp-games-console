@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.VisualBasic;
 
 namespace TrybeGames;
 public class TrybeGamesController
@@ -120,8 +121,20 @@ public class TrybeGamesController
     // 1. Crie a funcionalidde para adicionar uma nova pessoa jogadora ao banco de dados
     public void AddPlayer()
     {
-        // implementar
-        Console.WriteLine("Ainda não é possível realizar essa funcionalidade!");
+        int nextId = database.Players.Count() + 1;
+        Console.WriteLine("Insira o nome do jogador abaixo: ");
+        string newPlayerName = Console.ReadLine();
+        Player playerToAdd = new() {
+            Id = nextId,
+            Name = newPlayerName,
+        };
+        database.Players.Add(playerToAdd);
+        var allIds = from player in database.Players
+                     select player.Id;
+        foreach (var id in allIds)
+        {
+            Console.WriteLine($"O próximo id é {id}");
+        }
     }
 
     // 2. Crie a funcionalidade de adicionar um novo estúdio de jogos ao banco de dados
