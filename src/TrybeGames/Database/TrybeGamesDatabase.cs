@@ -22,7 +22,7 @@ public class TrybeGamesDatabase
     public List<Game> GetGamesPlayedBy(Player player)
     {
         IEnumerable<Game> gamesPlayed = from game in Games
-                                        join gameId in player.GamesOwned on game.Id equals gameId
+                                        where player.GamesOwned.Contains(game.Id)
                                         select game;
         
         return gamesPlayed.ToList();
@@ -31,8 +31,12 @@ public class TrybeGamesDatabase
     // 6. Crie a funcionalidade de buscar jogos comprados por uma pessoa jogadora
     public List<Game> GetGamesOwnedBy(Player playerEntry)
     {
-        // Implementar
-        throw new NotImplementedException();
+        IEnumerable<Game> gamesPlayed = from game in Games
+                                        join gameId in playerEntry.GamesOwned
+                                        on game.Id equals gameId
+                                        select game;
+        
+        return gamesPlayed.ToList();
     }
 
 
